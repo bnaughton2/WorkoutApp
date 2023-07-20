@@ -2,24 +2,28 @@ import * as React from 'react';
 import { Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from "@react-navigation/stack";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import SettingScreen from './screens/SettingScreen.js'
-import HomeScreen from './screens/HomeScreen.js'
-import HistoryScreen from './screens/HistoryScreen.js'
-import GoalScreen from './screens/GoalScreen.js'
-import MoreScreen from './screens/MoreScreen.js'
-import StartWorkoutScreen from './screens/StartWorkoutScreen.js'
+import SettingScreen from './screens/SettingScreen.js';
+import HomeScreen from './screens/HomeScreen.js';
+import HistoryScreen from './screens/HistoryScreen.js';
+import GoalScreen from './screens/GoalScreen.js';
+import MoreScreen from './screens/MoreScreen.js';
+import ProfileScreen from './screens/ProfileScreen.js';
+import SignUp from './screens/SignUp.js';
+import Login from './screens/Login.js';
+import StartWorkoutScreen from './screens/StartWorkoutScreen.js';
 import { StatusBar } from 'expo-status-bar';
+import { init } from './sqlite.js'
 
 
 const Tab = createBottomTabNavigator();
+let db;
+init().then(o => db=o);
 
-
-export default function App() {
-  return (
-    <NavigationContainer >
-      <StatusBar style="auto"/>
-      <Tab.Navigator
+function LowerTabs(){
+  return(
+    <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -56,12 +60,35 @@ export default function App() {
           color: '#F4F7FB'
         }
       })}>
-        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Home" initialParams={{ name: 'Bobby' }} component={HomeScreen} />
         <Tab.Screen name="History" component={HistoryScreen} />
         <Tab.Screen name="Start Workout" component={StartWorkoutScreen} />
         <Tab.Screen name="Goals" component={GoalScreen} />
         <Tab.Screen name="More" component={MoreScreen} />
       </Tab.Navigator>
+  );
+}
+
+
+export default function App() {
+  const Stack = createStackNavigator();
+  return (
+    <NavigationContainer >
+      <StatusBar style="auto"/>
+      <Stack.Navigator
+      initialRouteName='Login'
+      >
+        <Stack.Screen
+          name="Tabs"
+          component={LowerTabs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="Sign Up" component={SignUp} />
+        <Stack.Screen name="Login" component={Login} />
+
+      </Stack.Navigator>
+      
     </NavigationContainer>
   );
 }
