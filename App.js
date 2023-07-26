@@ -14,7 +14,7 @@ import SignUp from './screens/SignUp.js';
 import Login from './screens/Login.js';
 import StartWorkoutScreen from './screens/StartWorkoutScreen.js';
 import { StatusBar } from 'expo-status-bar';
-import { init } from './sqlite.js'
+import { init } from './sqlite.js';
 
 
 const Tab = createBottomTabNavigator();
@@ -45,19 +45,19 @@ function LowerTabs(){
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#0EC8F6',
-        tabBarInactiveTintColor: '#F4F7FB',
+        tabBarActiveTintColor: '#F4F5FB',
+        tabBarInactiveTintColor: '#F4F5FB',
         tabBarLabelStyle: {
           color: '#F4F5FB'
         },
         tabBarStyle :{
-          backgroundColor: '#086dd2'
+          backgroundColor: '#08125d'
         },
         headerStyle: {
-          backgroundColor: '#086dd2',
+          backgroundColor: '#08125d',
         },
         headerTitleStyle: {
-          color: '#F4F7FB'
+          color: '#F4F5FB'
         }
       })}>
         <Tab.Screen name="Home" initialParams={{ name: 'Bobby' }} component={HomeScreen} />
@@ -65,7 +65,7 @@ function LowerTabs(){
         <Tab.Screen name="Start Workout" component={StartWorkoutScreen} />
         <Tab.Screen name="Goals" component={GoalScreen} />
         <Tab.Screen name="More" component={MoreScreen} />
-      </Tab.Navigator>
+    </Tab.Navigator>
   );
 }
 
@@ -74,18 +74,32 @@ export default function App() {
   const Stack = createStackNavigator();
   return (
     <NavigationContainer >
-      <StatusBar style="auto"/>
+      <StatusBar style="light"/>
       <Stack.Navigator
       initialRouteName='Login'
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#08125d',
+          shadowColor: 'transparent',
+        },
+        headerTitleStyle: {
+          color: '#08125d'
+        },
+        headerBackTitleStyle:{
+          color: '#F4F5FB'
+        },
+      }}
       >
         <Stack.Screen
           name="Tabs"
           component={LowerTabs}
-          options={{ headerShown: false }}
+          options={{ 
+            headerShown: false,
+            gestureEnabled: false }}
         />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Sign Up" component={SignUp} />
-        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Login" component={Login} options={{headerShown: false }}/>
 
       </Stack.Navigator>
       
