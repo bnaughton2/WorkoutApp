@@ -5,7 +5,6 @@ import { StatusBar } from 'expo-status-bar';
 import * as SQLite from "expo-sqlite";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { init } from '../sqlite.js'
-import { Icon } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Animated } from "react-native";
 
