@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect, useRef } from "react";
 import { Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -15,6 +16,7 @@ import Login from './screens/Login.js';
 import StartWorkoutScreen from './screens/StartWorkoutScreen.js';
 import { StatusBar } from 'expo-status-bar';
 import { init } from './sqlite.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Tab = createBottomTabNavigator();
@@ -22,6 +24,19 @@ let db;
 init().then(o => db=o);
 
 function LowerTabs(){
+  const [userID, setUserID] = useState(0);
+  const [firstName, setFirstName] = useState('');
+
+  useEffect(() => {
+
+    AsyncStorage.getItem('userID', (err, result) => {
+      setUserID(JSON.parse(result));
+    });
+    AsyncStorage.getItem('firstName', (err, result) => {
+      setFirstName(JSON.parse(result));
+    });
+    }, [userID, firstName]);
+
   return(
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -60,7 +75,7 @@ function LowerTabs(){
           color: '#F4F5FB'
         }
       })}>
-        <Tab.Screen name="Home" initialParams={{ name: 'Bobby' }} component={HomeScreen} />
+        <Tab.Screen name="Home" component={HomeScreen} options={{title: 'Hi '+firstName+'!'}}/>
         <Tab.Screen name="History" component={HistoryScreen} />
         <Tab.Screen name="Start Workout" component={StartWorkoutScreen} />
         <Tab.Screen name="Goals" component={GoalScreen} />

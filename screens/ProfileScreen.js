@@ -5,7 +5,6 @@ import { StatusBar } from 'expo-status-bar';
 import * as SQLite from "expo-sqlite";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { init } from '../sqlite.js'
-import { Icon } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Animated } from "react-native";
 
@@ -35,44 +34,37 @@ export default function ProfileScreen({ navigation, route }) {
         fontWeight: 'bold',
         color: '#F4F5FB',
         paddingTop: '2%',
-        alignContent: 'center'
+
+      },
+      settingsTitle:{
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#F4F5FB',
+        padding: '4%',
       },
       nameText:{
         fontSize: 14,
         color: '#F4F5FB',
-        paddingTop: '5%'
+        padding: '2%',
+        alignItems: 'center'
       },  
-      buttonLeft:{
-
-        width: '49%',
-        height: 50,
+      button:{
+        width: '100%',
+        height: 45,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 10,
         borderRadius: 10,
         backgroundColor: '#0C668D',
         marginBottom: '5%',
-        marginRight: '1%',
-        fontSize: 16
+        flexDirection: 'row',
+        paddingLeft: '5%'
         },
-      buttonRight:{
-
-        width: '49%',
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 10,
-        borderRadius: 10,
-        backgroundColor: '#0C668D',
-        marginBottom: '5%',
-        marginLeft: '1%',
-        fontSize: 16
+      inputText:{
+        color:"#F4F5FB",
+        fontSize: 16,
+        justifyContent: 'center'
         },
-        inputText:{
-          color:"#F4F5FB",
-          fontSize: 16,
-          },
-    });
+  });
 
     useEffect(() => {
 
@@ -96,6 +88,7 @@ export default function ProfileScreen({ navigation, route }) {
     
     return (
       <View style={styles.container}>
+
         <Ionicons name='person-circle-outline' size={60} color={'#F4F5FB'}/>
         <Text style={styles.nameTitle}>{firstName || '----'}'s Profile</Text>
         <View
@@ -103,7 +96,7 @@ export default function ProfileScreen({ navigation, route }) {
             borderBottomColor: '#F4F5FB',
             borderBottomWidth: StyleSheet.hairlineWidth,
             width: '100%',
-            paddingBottom: '5%'
+            padding: '2%'
           }}
         />
         <View>
@@ -120,24 +113,23 @@ export default function ProfileScreen({ navigation, route }) {
             borderBottomColor: '#F4F5FB',
             borderBottomWidth: StyleSheet.hairlineWidth,
             width: '100%',
-            paddingBottom: '5%'
+            padding: '2%'
           }}
         />
-        <View>
-          <Text style={styles.nameTitle}>Account Settings</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'center', paddingTop: '5%'}}>
-            <TouchableOpacity
-              style={styles.buttonLeft}
-              >
+        <View style={{alignItems: 'center', width: '100%'}}>
+          <Text style={styles.settingsTitle}>Account Settings</Text>
+          <View style={{flexDirection: 'column', justifyContent: 'center', width: '100%'}}>
+          <TouchableOpacity style={styles.button}>
               <Text style={styles.inputText}>Change Email</Text>
+              <View style={{marginLeft: 'auto'}}><Ionicons name='chevron-forward-outline' size={25} color={'#F4F5FB'} /></View>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonRight}
-              >
+            <TouchableOpacity style={styles.button}>
               <Text style={styles.inputText}>Change Password</Text>
+              <View style={{marginLeft: 'auto'}}><Ionicons name='chevron-forward-outline' size={25} color={'#F4F5FB'} /></View>
             </TouchableOpacity>
           </View>
         </View>
+
       </View>
     );
   }
